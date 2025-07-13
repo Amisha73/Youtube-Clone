@@ -17,7 +17,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 const SideNavbar = ({sideNavbar}) => {
 
   return (
-    <div className={sideNavbar ? 'no-scrollbar flex flex-col box-border h-[92vh] overflow-y-auto fixed top-14 left-0 w-64 px-3 py-2 bg-black text-white' : 'hidden transition '}>
+    <div className={sideNavbar ? 'no-scrollbar hidden md:flex flex-col box-border h-[92vh] overflow-y-auto fixed top-14 left-0 w-64 px-3 py-2 bg-black text-white' : 'hidden transition '}>
         <div className='flex flex-col flex-[0.16 1] border-b border-[rgba(86,85,85)] pb-[10px]'>
             <Link to={"/"} className='flex items-center gap-5 w-full px-2 py-[10px] rounded-2xl cursor-pointer hover:bg-[rgba(35,35,35)]'>
                 <HomeIcon className='text-white'/>

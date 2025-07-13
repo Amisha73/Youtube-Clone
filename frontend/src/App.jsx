@@ -17,7 +17,7 @@ const App = () => {
     setSideNavbar(value);
   }
   return (
-    <div className='App bg-black'>
+    <div className='App bg-black '>
       <Navbar setSideNavbarFunc={setSideNavbarFunc} sideNavbar={sideNavbar} />
       <Routes>
         <Route path='/' element={<Home sideNavbar={sideNavbar} />}/>

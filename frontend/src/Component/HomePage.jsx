@@ -12,7 +12,7 @@ const HomePage = ({ sideNavbar }) => {
     <div
       className={
         sideNavbar
-          ? "flex flex-col overflow-x-hidden flex-1 ml-[244px] min-h-screen"
+          ? "flex flex-col overflow-x-hidden flex-1 md:ml-[244px] min-h-screen"
           : "flex flex-col overflow-x-hidden flex-1 w-full min-h-screen"
       }
     >
@@ -31,7 +31,7 @@ const HomePage = ({ sideNavbar }) => {
       </div>
 
       {/* video section  */}
-      <div className={sideNavbar ? "grid box-border gap-3 grid-cols-3 pt-32 pb-5 px-5 bg-black" : "grid grid-cols-4 gap-3 pt-32 pb-5 px-5 bg-black box-border"} >
+      <div className={sideNavbar ? "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 pt-32 pb-5 px-5 box-border gap-3 bg-black" : "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 pt-32 pb-5 px-5 bg-black box-border"} >
         <Link to={"/watch/123"} className="text-white flex box-border flex-col cursor-pointer h-80">
           <div className="w-full relative box-border h-[216px]">
             <img

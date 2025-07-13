@@ -33,8 +33,6 @@ const Login = () => {
       if (response.ok) {
         // Store the token in localStorage
         localStorage.setItem("token", fullData.token);
-        // Optionally store user data if needed
-        // localStorage.setItem("user", JSON.stringify(fullData.user));
         console.log(fullData);
         navigate("/"); // Redirect to home page
       } else {
@@ -48,9 +46,9 @@ const Login = () => {
   }
 
   return (
-    <div className="w-full h-screen text-white flex justify-center items-center font-normal cursor-pointer">
-      <div className="w-[40%] h-[50%] bg-black box-border p-12 flex flex-col items-center justify-center shadow shadow-white">
-        <div className="flex gap-3 w-full justify-center items-center text-2xl text-white font-medium">
+    <div className="w-full h-screen flex justify-center items-center bg-black text-white p-3 ">
+      <div className="w-full max-w-md bg-black p-6 md:p-8 rounded-lg border shadow flex flex-col items-center shadow-white">
+        <div className="flex gap-3 w-full justify-center items-center text-2xl text-white font-medium mb-4">
           <img src={logo} alt="logo" className="w-8" />
           LogIn
         </div>
@@ -61,41 +59,36 @@ const Login = () => {
           </div>
         )}
 
-        <div className="flex flex-col gap-7 w-full items-center justify-center mt-6">
-          <div className="w-full flex justify-center items-center">
-            <input
-              type="email"
-              placeholder="Email"
-              value={loginField.email}
-              onChange={(e) => handleOnChangeInput(e, "email")}
-              className="w-[70%] h-11 text-white p-3 border-none rounded-md bg-[#222222]"
-            />
-          </div>
-          <div className="w-full flex justify-center items-center">
-            <input
-              type="password"
-              placeholder="Password"
-              value={loginField.password}
-              onChange={(e) => handleOnChangeInput(e, "password")}
-              className="w-[70%] h-11 text-white p-3 border-none rounded-md bg-[#222222]"
-            />
-          </div>
+        <div className="flex flex-col gap-4 w-full mt-6">
+          <input
+            type="email"
+            placeholder="Email"
+            value={loginField.email}
+            onChange={(e) => handleOnChangeInput(e, "email")}
+            className="w-full h-11 text-white p-3 border-none rounded-md bg-[#222222] focus:outline-none"
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={loginField.password}
+            onChange={(e) => handleOnChangeInput(e, "password")}
+            className="w-full h-11 text-white p-3 border-none rounded-md bg-[#222222] focus:outline-none"
+          />
         </div>
 
-        <div className="w-[70%] flex justify-between mt-7">
+        <div className="w-full flex justify-between mt-6">
           <div
-            className="w-[25%] border h-8 font-medium flex justify-center items-center rounded-md hover:bg-white hover:text-black cursor-pointer"
+            className="w-[48%] border h-10 font-medium flex justify-center items-center rounded-md hover:bg-white hover:text-black cursor-pointer"
             onClick={handleLogin}
           >
             Login
           </div>
           <Link
             to={"/signup"}
-            className="w-[25%] font-medium border h-8 flex justify-center items-center rounded-md hover:bg-white hover:text-black"
+            className="w-[48%] font-medium border h-10 flex justify-center items-center rounded-md hover:bg-white hover:text-black"
           >
             Sign Up
           </Link>
-          {/* <div className="w-[25%] border h-8 font-medium flex justify-center items-center rounded-md hover:bg-white hover:text-black">Cancel</div> */}
         </div>
       </div>
     </div>
