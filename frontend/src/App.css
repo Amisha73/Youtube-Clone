@@ -1,0 +1,20 @@
+/* write your css here */
+.App{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.no-scrollbar {
+  @apply [scrollbar-width:none] [&::-webkit-scrollbar]:hidden;
+}
+.imagewidth{
+  width: 20%;
+}
+.imgwidth{
+  width: 100%;
+  height: 200px;
+  border-radius: 100%;
+}
+.opacitycal{
+  background-color: rgba(0, 0, 0, 0.7);
+}
