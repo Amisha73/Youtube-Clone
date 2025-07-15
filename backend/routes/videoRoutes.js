@@ -1,10 +1,12 @@
 const express = require('express');
-const { getAllVideos, getVideoById, addComment } = require('../controllers/videoController');
+const { uploadVideo, getvideo, getVideoByChannel, likeVideo, dislikeVideo } = require('../controllers/videoController');
 const { authenticate } = require('../middleware/authMiddleware');
 const router = express.Router();
 
-router.get('/', getAllVideos);
-router.get('/:id', getVideoById);
-router.post('/:id/comments', authenticate, addComment);
+router.post("/uploadvideo", authenticate, uploadVideo);
+router.get("/getvideo/:id", authenticate, getvideo);
+router.get("/channel/:channelId", authenticate, getVideoByChannel);
+router.post("/:id/like", authenticate, likeVideo);
+router.post("/:id/dislike", authenticate, dislikeVideo)
 
 module.exports = router;

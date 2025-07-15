@@ -13,4 +13,7 @@ const videoSchema = new mongoose.Schema({
   comments: [{ text: String, userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User ' } }],
 });
 
-module.exports = mongoose.model('Video', videoSchema);
+module.exports = mongoose.model('Video ', videoSchema);
+
+
+// videolink 
