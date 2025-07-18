@@ -38,6 +38,6 @@ const upload = multer({
       cb(new Error('Error: Images and Videos only!'));
     }
   }
-}).fields([{ name: 'image', maxCount: 1 }, { name: 'video', maxCount: 1 }, { name: 'channelBanner', maxCount: 1 }, { name: 'profilePicture', maxCount: 1 }]); // Expecting fields for image, video, channelBanner, and profilePicture
+}).fields([{ name: 'image', maxCount: 1 }, { name: 'video', maxCount: 1 }, { name: 'channelBanner', maxCount: 1 }, { name: 'profilePicture', maxCount: 1 }, { name: 'thumnail', maxCount: 1 },, { name: 'url', maxCount: 1 }]); 
 
 module.exports = upload;

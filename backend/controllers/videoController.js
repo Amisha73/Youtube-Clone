@@ -5,7 +5,7 @@ const Channel = require("../models/Channel");
 // Upload Image and Video
 exports.uploadMedia = async (req, res) => {
   try {
-    const { title, description, channelId } = req.body; // Get other video details from the request
+    const { title, description, channelId, videoType } = req.body; // Get other video details from the request
 
     let videoUrl;
     let imageUrl;
@@ -33,6 +33,7 @@ exports.uploadMedia = async (req, res) => {
       title,
       thumbnail: imageUrl, // Use the uploaded image URL as the thumbnail
       description,
+      videoType, // Store the video type
       url: videoUrl, // Store the video URL
       channelId,
       user: req.user.id,
@@ -79,34 +80,6 @@ exports.getVideoByChannel= async (req, res) => {
     res.status(400).json(err);
   }
 };
-
-// // Like Video
-// exports.likeVideo = async (req, res) => {
-//   try {
-//     const video = await Video.findById(req.params.id);
-//     if (!video) return res.status(404).send("Video not found");
-
-//     video.likes += 1;
-//     await video.save();
-//     res.json(video);
-//   } catch (err) {
-//     res.status(400).json(err);
-//   }
-// };
-
-// // Dislike Video
-// exports.dislikeVideo = async (req, res) => {
-//   try {
-//     const video = await Video.findById(req.params.id);
-//     if (!video) return res.status(404).send("Video not found");
-
-//     video.dislikes += 1;
-//     await video.save();
-//     res.json(video);
-//   } catch (err) {
-//     res.status(400).json(err);
-//   }
-// };
 
 // Add Comment
 exports.addComment = async (req, res) => {

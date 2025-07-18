@@ -1,18 +1,25 @@
-import React from "react";
-import moanathumbnail from '../assestes/moana-thumbnail.jpeg'
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import localVideos from '../data/localVideos';
 
 const HomePage = ({ sideNavbar }) => {
-  const options = [
-    "All", "Music", "Gaming",  "Recruitment",  "News",  "Data Structure", "Comedy", "Movies", "Food"
-  ];
+  const [selectedOption, setSelectedOption] = useState("All");
+
+  // Get unique video types from localVideos
+  const videoTypes = Array.from(new Set(localVideos.map(video => video.videoType)));
+
+  // Options array with "All" plus unique video types
+  const options = ["All", ...videoTypes];
+
+  // Filter videos based on selected option
+  const filteredVideos = selectedOption === "All"
+    ? localVideos
+    : localVideos.filter(video => video.videoType === selectedOption);
 
   return (
     <div
       className={
-        // sideNavbar
-        //   ? "flex flex-col overflow-x-hidden flex-1 md:ml-[244px] min-h-screen" : 
-          "flex flex-col overflow-x-hidden flex-1 w-full min-h-screen"
+          "flex flex-col overflow-x-hidden flex-1 w-full min-h-screen no-scrollbar"
       }
     >
       {/* filter section */}
@@ -21,7 +28,10 @@ const HomePage = ({ sideNavbar }) => {
           return (
             <div
               key={index}
-              className="flex h-7 px-3 py-4 bg-[rgba(42,42,42)] text-white font-semibold rounded-md justify-center items-center cursor-pointer flex-shrink-0"
+              onClick={() => setSelectedOption(item)}
+              className={`flex h-7 px-3 py-4 rounded-md justify-center items-center cursor-pointer flex-shrink-0 font-semibold text-sm ${
+                selectedOption === item ? "bg-white text-black" : "bg-[rgba(42,42,42)] text-white"
+              }`}
             >
               {item}
             </div>
@@ -30,175 +40,42 @@ const HomePage = ({ sideNavbar }) => {
       </div>
 
       {/* video section  */}
-      <div className={
-        // sideNavbar ? "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 pt-32 pb-5 px-5 box-border gap-3 bg-black" :
-         "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 pt-32 pb-5 px-5 bg-black box-border"} >
-        <Link to={"/watch/123"} className="text-white flex box-border flex-col cursor-pointer h-80">
-          <div className="w-full relative box-border h-[216px]">
-            <img
-              src="https://i.ytimg.com/vi/lU-csIO1x0E/hq720.jpg?sqp=-%E2%80%A6BACGAY4AUAB&rs=AOn4CLA15CyTlnyhZI_iOzwfSq4EReX7zA"
-              alt="thumbnail"
-              className="w-full h-full rounded-xl"
-            />
-            <div className="absolute bottom-1 right-1 w-auto px-1 py-1 bg-[rgba(42,42,42)] rounded-md">
-              28:05
-            </div>
-          </div>
-
-          <div className="flex pt-2">
-            <div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 pt-32 pb-5 px-5 bg-black box-border ">
+        {filteredVideos.map((video) => (
+          <Link key={video.videoId} to={`/watch/${video.videoId}`} className="text-white flex box-border flex-col cursor-pointer h-80 mt-6 w-full">
+            <div className="w-full relative box-border h-[216px]">
               <img
-                src="https://yt3.ggpht.com/Y_G09q2it3FZMrbbxwLjgMjSanR1mZAsXnEE6g6ZaBXlq2dLIRsKqSrGTCMuiyvvVavu-xFvPEc=s68-c-k-c0x00ffffff-no-rj"
-                alt="profile"
-                className="w-12 h-10 rounded-full"
+                src={video.thumbnailUrl}
+                alt="thumbnail"
+                className="w-full h-full rounded-xl"
               />
+              <div className="absolute bottom-1 right-1 w-auto px-1 py-1 bg-[rgba(42,42,42)] rounded-md">
+                {video.videoLength}
+              </div>
             </div>
 
-            <div className="w-full p-3 box-border flex flex-col">
-              <div className="font-semibold text-xl">video title</div>
-              <div className="mt-1 text-md text-[rgba(170,170,170)]">
-                User channel name
+            <div className="flex pt-2">
+              <div>
+                <img
+                  src="https://i.pinimg.com/originals/2a/2d/c2/2a2dc2d48cd11f4577b4813b76445702.jpg?nii=t"
+                  alt="profile"
+                  className="w-12 h-10 rounded-full"
+                />
               </div>
-              <div className="flex items-center gap-4">
-                <div className="text-sm text-gray-400">124 views</div>
-                <div className="text-sm text-gray-400">4 days ago</div>
-              </div>
-            </div>
-          </div>
-        </Link>
-        <Link to={"/watch/123"} className="text-white flex box-border flex-col cursor-pointer h-80">
-          <div className="w-full relative box-border h-[216px]">
-            <img
-              src={moanathumbnail}
-              alt="thumbnail"
-              className="w-full h-full rounded-xl"
-            />
-            <div className="absolute bottom-1 right-1 w-auto px-1 py-1 bg-[rgba(42,42,42)] rounded-md">
-              28:05
-            </div>
-          </div>
 
-          <div className="flex pt-2">
-            <div>
-              <img
-                src="https://yt3.ggpht.com/Y_G09q2it3FZMrbbxwLjgMjSanR1mZAsXnEE6g6ZaBXlq2dLIRsKqSrGTCMuiyvvVavu-xFvPEc=s68-c-k-c0x00ffffff-no-rj"
-                alt="profile"
-                className="w-12 h-10 rounded-full"
-              />
-            </div>
-
-            <div className="w-full p-3 box-border flex flex-col">
-              <div className="font-semibold text-xl">video title</div>
-              <div className="mt-1 text-md text-[rgba(170,170,170)]">
-                User channel name
-              </div>
-              <div className="flex items-center gap-4">
-                <div className="text-sm text-gray-400">124 views</div>
-                <div className="text-sm text-gray-400">4 days ago</div>
+              <div className="w-full p-3 box-border flex flex-col">
+                <div className="font-semibold text-md md:text-lg">{video.title}</div>
+                
+                <div className="flex justify-between items-center gap-4">
+                  <div className=" text-md text-[rgba(170,170,170)]">
+                  {video.uploader}
+                </div>
+                  <div className="text-sm text-gray-400">{video.views} views</div>
+                </div>
               </div>
             </div>
-          </div>
-        </Link>
-        <Link to={"/watch/123"} className="text-white flex box-border flex-col cursor-pointer h-80">
-          <div className="w-full relative box-border h-[216px]">
-            <img
-              src={moanathumbnail}
-              alt="thumbnail"
-              className="w-full h-full rounded-xl"
-            />
-            <div className="absolute bottom-1 right-1 w-auto px-1 py-1 bg-[rgba(42,42,42)] rounded-md">
-              28:05
-            </div>
-          </div>
-
-          <div className="flex pt-2">
-            <div>
-              <img
-                src="https://yt3.ggpht.com/Y_G09q2it3FZMrbbxwLjgMjSanR1mZAsXnEE6g6ZaBXlq2dLIRsKqSrGTCMuiyvvVavu-xFvPEc=s68-c-k-c0x00ffffff-no-rj"
-                alt="profile"
-                className="w-12 h-10 rounded-full"
-              />
-            </div>
-
-            <div className="w-full p-3 box-border flex flex-col">
-              <div className="font-semibold text-xl">video title</div>
-              <div className="mt-1 text-md text-[rgba(170,170,170)]">
-                User channel name
-              </div>
-              <div className="flex items-center gap-4">
-                <div className="text-sm text-gray-400">124 views</div>
-                <div className="text-sm text-gray-400">4 days ago</div>
-              </div>
-            </div>
-          </div>
-        </Link>
-        <Link to={"/watch/123"} className="text-white flex box-border flex-col cursor-pointer h-80">
-          <div className="w-full relative box-border h-[216px]">
-            <img
-              src={moanathumbnail}
-              alt="thumbnail"
-              className="w-full h-full rounded-xl"
-            />
-            <div className="absolute bottom-1 right-1 w-auto px-1 py-1 bg-[rgba(42,42,42)] rounded-md">
-              28:05
-            </div>
-          </div>
-
-          <div className="flex pt-2">
-            <div>
-              <img
-                src="https://yt3.ggpht.com/Y_G09q2it3FZMrbbxwLjgMjSanR1mZAsXnEE6g6ZaBXlq2dLIRsKqSrGTCMuiyvvVavu-xFvPEc=s68-c-k-c0x00ffffff-no-rj"
-                alt="profile"
-                className="w-12 h-10 rounded-full"
-              />
-            </div>
-
-            <div className="w-full p-3 box-border flex flex-col">
-              <div className="font-semibold text-xl">video title</div>
-              <div className="mt-1 text-md text-[rgba(170,170,170)]">
-                User channel name
-              </div>
-              <div className="flex items-center gap-4">
-                <div className="text-sm text-gray-400">124 views</div>
-                <div className="text-sm text-gray-400">4 days ago</div>
-              </div>
-            </div>
-          </div>
-        </Link>
-        <Link to={"/watch/123"} className="text-white flex box-border flex-col cursor-pointer h-80">
-          <div className="w-full relative box-border h-[216px]">
-            <img
-              src={moanathumbnail}
-              alt="thumbnail"
-              className="w-full h-full rounded-xl"
-            />
-            <div className="absolute bottom-1 right-1 w-auto px-1 py-1 bg-[rgba(42,42,42)] rounded-md">
-              28:05
-            </div>
-          </div>
-
-          <div className="flex pt-2">
-            <div>
-              <img
-                src="https://yt3.ggpht.com/Y_G09q2it3FZMrbbxwLjgMjSanR1mZAsXnEE6g6ZaBXlq2dLIRsKqSrGTCMuiyvvVavu-xFvPEc=s68-c-k-c0x00ffffff-no-rj"
-                alt="profile"
-                className="w-12 h-10 rounded-full"
-              />
-            </div>
-
-            <div className="w-full p-3 box-border flex flex-col">
-              <div className="font-semibold text-xl">video title</div>
-              <div className="mt-1 text-md text-[rgba(170,170,170)]">
-                User channel name
-              </div>
-              <div className="flex items-center gap-4">
-                <div className="text-sm text-gray-400">124 views</div>
-                <div className="text-sm text-gray-400">4 days ago</div>
-              </div>
-            </div>
-          </div>
-        </Link>
-        
+          </Link>
+        ))}
       </div>
     </div>
   );

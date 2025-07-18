@@ -4,7 +4,7 @@ const { authenticate } = require('../middleware/authMiddleware');
 const upload = require('../middleware/upload');
 const router = express.Router();
 
-router.post("/uploadMedia", authenticate, upload ,uploadMedia);
+router.post("/upload", authenticate, upload ,uploadMedia);
 router.get("/getvideo/:id", authenticate, getvideo);
 router.get("/channel/:channelId", authenticate, getVideoByChannel);
 router.post("/:id/like", authenticate, likeVideo);

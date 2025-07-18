@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import logo from "../assestes/icon_logo.png";
-import SearchIcon from "@mui/icons-material/Search";
-import KeyboardVoiceIcon from "@mui/icons-material/KeyboardVoice";
 import VideoCallIcon from "@mui/icons-material/VideoCall";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { Link, useNavigate } from "react-router-dom";
 import CreateChannel from "./CreateChannel";
 import { toast } from "react-toastify"; // Import toast
+import SearchBar from "./SearchBar";
 
 const Navbar = ({ setSideNavbarFunc, sideNavbar }) => {
   const [userProfilePic, setUserProfilePic] = useState(
@@ -132,7 +131,7 @@ const Navbar = ({ setSideNavbarFunc, sideNavbar }) => {
           onClick={sideNavbarFunc}
         />
           <Link to="/" className="flex items-center gap-2">
-            <img src={logo} alt="logo" className="w-8" />
+            <img src={logo} alt="logo" className="w-9" />
             <span className="text-xl text-white font-mono font-semibold hidden md:block">
               YouTube
             </span>
@@ -140,40 +139,7 @@ const Navbar = ({ setSideNavbarFunc, sideNavbar }) => {
         </div>
 
         {/* Middle - Search */}
-        <div className="flex items-center gap-2 flex-grow max-w-xl mx-4">
-          {showSearchBar ? (
-            <div className="flex w-full absolute left-0 top-14 bg-black p-2 md:relative md:top-0 md:bg-transparent rounded-full border border-gray-700">
-              <input
-                type="text"
-                placeholder="Search"
-                className="w-full h-10 rounded-l-full bg-[#121212] text-white text-base pl-4 focus:outline-none"
-              />
-              <button className="bg-gray-600 w-14 rounded-r-full flex justify-center items-center hover:bg-gray-700">
-                <SearchIcon className="text-white" />
-              </button>
-            </div>
-          ) : (
-            <div className="hidden sm:flex w-full">
-              <input
-                type="text"
-                placeholder="Search"
-                className="w-full h-10 rounded-l-full border border-gray-600 bg-[#121212] text-white text-base pl-7 focus:outline-none"
-              />
-              <div className="flex justify-center items-center bg-gray-600 w-14 rounded-r-full cursor-pointer border-gray-600 hover:bg-gray-700">
-                <SearchIcon className="text-white text-lg" />
-              </div>
-              <div className="flex justify-center items-center bg-gray-600 rounded-full w-12 h-10 ml-3 cursor-pointer hover:bg-gray-700">
-                <KeyboardVoiceIcon className="text-white" />
-              </div>
-            </div>
-          )}
-          <button
-            className="sm:hidden bg-gray-600 rounded-full w-10 h-10 flex justify-center items-center hover:bg-gray-700"
-            onClick={toggleSearchBar}
-          >
-            <SearchIcon className="text-white" />
-          </button>
-        </div>
+        <SearchBar showSearchBar={showSearchBar} toggleSearchBar={toggleSearchBar} />
 
         {/* Right side */}
         <div className="navbar-right flex gap-5 justify-center items-center relative">
