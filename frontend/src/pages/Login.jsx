@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import logo from "../assestes/icon_logo.png";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify"; // Import toast
 
 const Login = () => {
   const [loginField, setLoginField] = useState({ email: "", password: "" });
@@ -33,15 +34,17 @@ const Login = () => {
       if (response.ok) {
         // Store the token in localStorage
         localStorage.setItem("token", fullData.token);
-        console.log(fullData);
+        toast.success("User  logged in successfully!"); // Show success toast
         navigate("/"); // Redirect to home page
       } else {
         // Handle login failure
         setErrorMessage(fullData.message || "Login failed. Please try again.");
+        toast.error(fullData.message || "Login failed. Please try again."); // Show error toast
       }
     } catch (error) {
       console.error("Login error:", error);
       setErrorMessage("An error occurred. Please try again.");
+      toast.error("An error occurred. Please try again."); // Show error toast
     }
   }
 

@@ -7,11 +7,12 @@ import Video from './pages/Video'
 import Profile from './pages/Profile'
 import VideoUpload from './pages/VideoUpload'
 import SignUp from './pages/SignUp'
-import Login from './Component/Login'
+import Login from './pages/Login'
+import MyChannels from './pages/MyChannels'
 
 
 const App = () => {
-  const [sideNavbar, setSideNavbar] = useState(true);
+  const [sideNavbar, setSideNavbar] = useState(false);
 
   const setSideNavbarFunc = (value) =>{
     setSideNavbar(value);
@@ -26,6 +27,7 @@ const App = () => {
         <Route path='/:id/upload' element = {<VideoUpload/>}/>
         <Route path='/signup' element = {<SignUp/>} />
         <Route path='/login' element = {<Login/>} />
+        <Route path='/user/mychannel' element={<MyChannels sideNavbar={sideNavbar}/>} />
       </Routes>
       
     </div>

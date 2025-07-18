@@ -10,7 +10,7 @@ const SignUp = () => {
     username: "",
     email: "",
     password: "",
-    avatar: uploadImageUrl,
+    profilePicture: null,
   });
   const navigate = useNavigate();
 
@@ -21,24 +21,46 @@ const SignUp = () => {
     });
   };
 
-  async function handleRegister() {
-    const object = {
-      method: "POST",
-      body: JSON.stringify({
-        username: signUpField.username,
-        email: signUpField.email,
-        password: signUpField.password,
-        avatar: signUpField.avatar,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
+  const uploadImage = (e) => {
+    const file = e.target.files[0];
+    setSignUpField({ ...signUpField, profilePicture: file });
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setUploadImageUrl(reader.result);
     };
-    const data = await fetch("http://localhost:8000/auth/register", object);
-    const fullData = await data.json();
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
+
+  async function handleRegister() {
+  const formData = new FormData();
+  formData.append("username", signUpField.username);
+  formData.append("email", signUpField.email);
+  formData.append("password", signUpField.password);
+  if (signUpField.profilePicture) {
+    formData.append("profilePicture", signUpField.profilePicture);
+  }
+
+  const object = {
+    method: "POST",
+    body: formData,
+    // Remove the Content-Type header
+  };
+
+  try {
+    const response = await fetch("http://localhost:8000/auth/register", object);
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    const fullData = await response.json();
     console.log(fullData);
     navigate("/login");
+  } catch (error) {
+    console.error("Error during registration:", error);
   }
+}
+
 
   return (
     <div className="text-white flex flex-col items-center justify-center h-screen w-full bg-black p-3">
@@ -72,7 +94,7 @@ const SignUp = () => {
           />
 
           <div className="flex flex-col items-center w-full">
-            <input type="file" className="mb-2" />
+            <input type="file" className="mb-2" onChange={uploadImage} />
             <div className="w-24 h-24">
               <img
                 src={uploadImageUrl}
@@ -103,27 +125,3 @@ const SignUp = () => {
 };
 
 export default SignUp;
-
-// const uploadImage = async (e) => {
-  //   console.log("uploading....");
-  //   const file = e.target.files;
-  //   const data = new FormData();
-  //   data.append("file", file[0]);
-  //   // youtube-clone file
-  //   data.append("upload_preset", "yputube-clone");
-  //   try {
-  //     const response = await axios.post(
-  //       "http://api.cloudinary.com/v1_1/dhlklhfgj/image/upload",
-  //       data
-  //     );
-  //     console.log(response);
-  //     const imgUrl = response.data.url;
-  //     setUploadImageUrl(imgUrl);
-  //     setSignUpField({
-  //       ...signUpField,
-  //       avatar: imgUrl,
-  //     });
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
