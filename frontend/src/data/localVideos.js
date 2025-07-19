@@ -201,12 +201,12 @@ const localVideos = [
   },
   {
     videoId: "video12",
-    title: "What If You Were the Last Person on Earth",
+    title: "What If Everyone Disappeared?",
     thumbnailUrl:
       "https://i.ytimg.com/vi/7uGAINMAiL0/hq720.jpg?sqp=-…BACGAY4AUAB&rs=AOn4CLBXU_yHoVrFa6Lb7y6amMFl7pArQg",
     description: "What If You Were the Last Person on Earth - A thought-provoking video exploring the implications of being the last person on Earth.",
     videoLength: "10:00",
-    videoUrl: videoPlay,
+    videoUrl: "https://res.cloudinary.com/dtayqqu2k/video/upload/v1752855669/bn7ss5acjvzshnlivkhe.mp4",
     channelId: "channel02",
     uploader: "user03",
     views: 7500,
