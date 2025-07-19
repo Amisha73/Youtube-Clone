@@ -134,7 +134,6 @@ const VideoUpdated = ({ sideNavbar }) => {
         <div className="w-full">
           <video controls autoPlay className="rounded-xl w-full max-h-[480px] sm:max-h-[600px] object-contain">
             <source src={video.videoUrl} type="video/mp4" />
-            Your browser does not support the video tag.
           </video>
         </div>
         {/* Description */}

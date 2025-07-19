@@ -10,6 +10,7 @@ import Login from "./pages/Login";
 import MyChannels from "./pages/MyChannels";
 import VideoUpdated from "./pages/VideoUpdated";
 import SearchResult from "./pages/SearchResult";
+import NotFound from "./pages/Notfound";
 
 
 const App = () => {
@@ -30,6 +31,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/user/mychannel" element={<MyChannels sideNavbar={sideNavbar} />} />
         <Route path="/search" element={<SearchResult />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
   );

@@ -1,40 +1,26 @@
-const cloudinary = require('cloudinary').v2;
+const cloudinary = require("cloudinary").v2;
 const Video = require("../models/Video");
 const Channel = require("../models/Channel");
 
-// Upload Image and Video
 exports.uploadMedia = async (req, res) => {
   try {
-    const { title, description, channelId, videoType } = req.body; // Get other video details from the request
+    const { title, description, channelId, videoType } = req.body;
+    const { thumbnail } = req.files;
 
-    let videoUrl;
-    let imageUrl;
-
-    // Upload video if it exists
-    if (req.files.video) {
-      const videoFile = req.files.video[0]; // Get the uploaded video file
-      const videoUploadResult = await cloudinary.uploader.upload(videoFile.path, {
-        resource_type: "video", // Specify that this is a video upload
-      });
-      videoUrl = videoUploadResult.secure_url; // Store the video URL from Cloudinary
-    }
-
-    // Upload image if it exists
-    if (req.files.image) {
-      const imageFile = req.files.image[0]; // Get the uploaded image file
-      const imageUploadResult = await cloudinary.uploader.upload(imageFile.path, {
-        resource_type: "image", // Specify that this is an image upload
-      });
-      imageUrl = imageUploadResult.secure_url; // Store the image URL from Cloudinary
-    }
-
+    // Upload channel banner to Cloudinary
+    const thumbnailUploadResult = await cloudinary.uploader.upload(
+      thumbnail[0].path,
+      {
+        resource_type: "image",
+      }
+    );
+    
     // Create a new video document
     const newVideo = new Video({
       title,
-      thumbnail: imageUrl, // Use the uploaded image URL as the thumbnail
+      thumbnail: thumbnailUploadResult.secure_url,
       description,
-      videoType, // Store the video type
-      url: videoUrl, // Store the video URL
+      videoType,
       channelId,
       user: req.user.id,
     });
@@ -43,7 +29,9 @@ exports.uploadMedia = async (req, res) => {
     const savedVideo = await newVideo.save();
 
     // Add video reference to the channel
-    await Channel.findByIdAndUpdate(channelId, { $push: { videos: savedVideo._id } });
+    await Channel.findByIdAndUpdate(channelId, {
+      $push: { videos: savedVideo._id },
+    });
 
     res.status(201).json(savedVideo);
   } catch (err) {
@@ -54,7 +42,7 @@ exports.uploadMedia = async (req, res) => {
 
 
 // Get Video by ID
-exports.getvideo =async (req, res) => {
+exports.getvideo = async (req, res) => {
   try {
     const video = await Video.findById(req.params.id);
     if (!video) return res.status(404).send("Video not found");
@@ -70,11 +58,11 @@ exports.getvideo =async (req, res) => {
 };
 
 // Get Videos by Channel
-exports.getVideoByChannel= async (req, res) => {
+exports.getVideoByChannel = async (req, res) => {
   try {
     const videos = await Video.find({
       channelId: req.params.channelId,
-    }).populate("user", "username avatar");
+    }).populate("user", "username profilePicture");
     res.json(videos);
   } catch (err) {
     res.status(400).json(err);
@@ -101,7 +89,7 @@ exports.getComment = async (req, res) => {
   try {
     const video = await Video.findById(req.params.id).populate(
       "comments.userId",
-      "username avatar"
+      "username profilePicture"
     );
     if (!video) return res.status(404).send("Video not found");
 
@@ -111,35 +99,33 @@ exports.getComment = async (req, res) => {
   }
 };
 
-// // Update Video
-// router.put("/:id", auth, async (req, res) => {
-//   try {
-//     const updatedVideo = await Video.findByIdAndUpdate(
-//       req.params.id,
-//       req.body,
-//       { new: true }
-//     );
-//     if (!updatedVideo) return res.status(404).send("Video not found");
+// Update Video
+exports.updateVideo = async (req, res) => {
+  try {
+    const updatedVideo = await Video.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
+    if (!updatedVideo) return res.status(404).send("Video not found");
 
-//     res.json(updatedVideo);
-//   } catch (err) {
-//     res.status(400).json(err);
-//   }
-// });
+    res.json(updatedVideo);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+};
 
-// // Delete Video
-// router.delete("/:id", auth, async (req, res) => {
-//   try {
-//     const deletedVideo = await Video.findByIdAndDelete(req.params.id);
-//     if (!deletedVideo) return res.status(404).send("Video not found");
+// Delete Video
+exports.deleteVideo =  async (req, res) => {
+  try {
+    const deletedVideo = await Video.findByIdAndDelete(req.params.id);
+    if (!deletedVideo) return res.status(404).send("Video not found");
 
-//     res.send("Video deleted");
-//   } catch (err) {
-//     res.status(400).json(err);
-//   }
-// });
-
-
+    res.send("Video deleted");
+  } catch (err) {
+    res.status(400).json(err);
+  }
+};
 
 // Like Video - Toggle style (removes if already liked)
 exports.likeVideo = async (req, res) => {
@@ -157,7 +143,7 @@ exports.likeVideo = async (req, res) => {
       // Add new like
       video.likes += 1;
       video.likedBy.push(userId);
-      
+
       // Remove from dislikes if present
       if (video.dislikedBy.includes(userId)) {
         video.dislikes -= 1;
@@ -188,7 +174,7 @@ exports.dislikeVideo = async (req, res) => {
       // Add new dislike
       video.dislikes += 1;
       video.dislikedBy.push(userId);
-      
+
       // Remove from likes if present
       if (video.likedBy.includes(userId)) {
         video.likes -= 1;
