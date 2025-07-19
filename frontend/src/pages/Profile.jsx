@@ -1,13 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import SideNavbar from '../Component/SideNavbar'
 import ArrowRightIcon from '@mui/icons-material/ArrowRight'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 
 const Profile = ({sideNavbar}) => {
   const { id } = useParams();
   const [channelData, setChannelData] = useState(null);
+  const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
+
+  const handleVideoPlay = (videoId) => {
+         navigate(`/watch/${videoId}`);
+       };
 
   useEffect(() => {
     const fetchChannelData = async () => {
@@ -32,7 +38,26 @@ const Profile = ({sideNavbar}) => {
       }
     };
 
+    const fetchVideos = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const response = await fetch(`http://localhost:8000/videos/channel/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        if (!response.ok) {
+          throw new Error("Failed to fetch videos");
+        }
+        const data = await response.json();
+        setVideos(data.videos || []);
+      } catch (err) {
+        console.error("Error fetching videos:", err);
+      }
+    };
+
     fetchChannelData();
+    fetchVideos();
   }, [id]);
 
   if (loading) {
@@ -76,23 +101,23 @@ const Profile = ({sideNavbar}) => {
           <div className='text-xl text-gray-100 pb-2 font-medium flex items-center border-b border-[rgba(153,153,153)]'>Videos &nbsp; <ArrowRightIcon /></div>
 
           <div className='flex gap-6 flex-wrap mt-5'>
-            {channelData.videos && channelData.videos.length > 0 ? (
-              channelData.videos.map((video) => (
-                <Link key={video._id} to={`/watch/${video._id}`} className='w-52 cursor-pointer'>
-                  <div className='w-full'>
-                    <img src={video.thumbnail || ""} alt={video.title} className='w-full h-full object-cover' />
-                  </div>
+          {videos && videos.length > 0 ? (
+            videos.map((video) => (
+              <Link key={video._id} to={`/watch/${video._id}`} className='w-52 cursor-pointer'>
+                <div className='w-full relative'>
+                  <img src={video.thumbnail || ""} alt={video.title} className='w-full h-full object-cover'  onClick={() => handleVideoPlay(video._id)}/>
+                </div>
 
-                  <div className='flex flex-col w-full'>
-                    <div className='text-base text-gray-100 font-medium'>{video.title}</div>
-                    <div className='text-base text-[rgba(153,153,153)]'>{video.description}</div>
-                    <div className='text-xs text-gray-400'>Created at {new Date(video.createdAt).toLocaleDateString()}</div>
-                  </div>
-                </Link>
-              ))
-            ) : (
-              <div>No videos available.</div>
-            )}
+                <div className='flex flex-col w-full'>
+                  <div className='text-base text-gray-100 font-medium'>{video.title}</div>
+                  <div className='text-base text-[rgba(153,153,153)]'>{video.description}</div>
+                  <div className='text-xs text-gray-400'>Created at {new Date(video.createdAt).toLocaleDateString()}</div>
+                </div>
+              </Link>
+            ))
+          ) : (
+            <div>No videos available.</div>
+          )}
           </div>
         </div>
       </div>

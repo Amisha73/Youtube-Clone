@@ -42,9 +42,7 @@ const upload = multer({
     }
   },
 }).fields([
-  // { name: "image", maxCount: 1 },
   { name: "channelBanner", maxCount: 1 },
-  { name: "profilePicture", maxCount: 1 },
   { name: "thumbnail", maxCount: 1 },
 ]);
 

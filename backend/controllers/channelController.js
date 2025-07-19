@@ -87,11 +87,16 @@ exports.updateChannel = async (req, res) => {
   }
 };
 
+
 // Delete Channel
 exports.deleteChannel = async (req, res) => {
   try {
     const deletedChannel = await Channel.findByIdAndDelete(req.params.id);
     if (!deletedChannel) return res.status(404).send('Channel not found');
+
+    // Remove the deleted channel ID from the user's channel array
+    await User.findByIdAndUpdate(deletedChannel.user, { $pull: { channel: deletedChannel._id } });
+
     res.send('Channel deleted');
   } catch (err) {
     res.status(400).json(err);

@@ -1,14 +1,12 @@
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const cloudinary = require('cloudinary').v2; // Ensure Cloudinary is imported
 
 exports.register = async (req, res) => {
   const { username, email, password } = req.body;
-  const { profilePicture } = req.files; // Assuming you are using multer to handle file uploads
 
   // Validate input
-  if (!username || !email || !password || !profilePicture) {
+  if (!username || !email || !password ) {
     return res.status(400).json({ message: "All fields are required" });
   }
   try {
@@ -21,22 +19,15 @@ exports.register = async (req, res) => {
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Upload avatar to Cloudinary
-    const avatarUploadResult = await cloudinary.uploader.upload(profilePicture[0].path, {
-      resource_type: "image",
-    });
-
     // Create a new user
     const newUser  = new User({
       username,
       email,
       password: hashedPassword,
-      profilePicture: avatarUploadResult.secure_url, // Store the URL from Cloudinary
     });
 
     // Save the user to the database
-    await newUser .save();
-    // console.log("Received data:", { username, email, password, profilePicture });
+    await newUser .save();  
 
     // Respond with success
     res.status(201).json({ message: "User registered successfully" });

@@ -5,7 +5,7 @@ import VideoCallIcon from "@mui/icons-material/VideoCall";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { Link, useNavigate } from "react-router-dom";
 import CreateChannel from "./CreateChannel";
-import { toast } from "react-toastify"; // Import toast
+import { toast } from "react-toastify"; 
 import SearchBar from "./SearchBar";
 
 const Navbar = ({ setSideNavbarFunc, sideNavbar }) => {
@@ -145,7 +145,15 @@ const Navbar = ({ setSideNavbarFunc, sideNavbar }) => {
         <div className="navbar-right flex gap-5 justify-center items-center relative">
           {isLoggedIn ? (
             <>
-              <Link to={"/763/upload"}>
+              <Link
+                to={hasChannel ? "/763/upload" : "#"}
+                onClick={(e) => {
+                  if (!hasChannel) {
+                    e.preventDefault();
+                    toast.error("No channel found. Please create a channel first.");
+                  }
+                }}
+              >
                 <VideoCallIcon className="text-3xl cursor-pointer text-white" />
               </Link>
               <NotificationsIcon className="text-white text-3xl cursor-pointer" />
@@ -180,7 +188,7 @@ const Navbar = ({ setSideNavbarFunc, sideNavbar }) => {
                       className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
                       onClick={handleLogout}
                     >
-                      Sign out
+                      Logout
                     </div>
                   </div>
                 )}

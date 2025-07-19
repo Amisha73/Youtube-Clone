@@ -1,16 +1,14 @@
 import React, { useState } from "react";
 import logo from "../assestes/icon_logo.png";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify"; 
 
 const SignUp = () => {
-  const [uploadImageUrl, setUploadImageUrl] = useState(
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT00veDW-SlpBDqu7izpkCncMtChzPsamUqwA&s"
-  );
+  
   const [signUpField, setSignUpField] = useState({
     username: "",
     email: "",
     password: "",
-    profilePicture: null,
   });
   const navigate = useNavigate();
 
@@ -21,46 +19,30 @@ const SignUp = () => {
     });
   };
 
-  const uploadImage = (e) => {
-    const file = e.target.files[0];
-    setSignUpField({ ...signUpField, profilePicture: file });
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setUploadImageUrl(reader.result);
-    };
-    if (file) {
-      reader.readAsDataURL(file);
-    }
-  };
-
   async function handleRegister() {
-  const formData = new FormData();
-  formData.append("username", signUpField.username);
-  formData.append("email", signUpField.email);
-  formData.append("password", signUpField.password);
-  if (signUpField.profilePicture) {
-    formData.append("profilePicture", signUpField.profilePicture);
-  }
+    const formData = new FormData();
+    formData.append("username", signUpField.username);
+    formData.append("email", signUpField.email);
+    formData.append("password", signUpField.password);
 
-  const object = {
-    method: "POST",
-    body: formData,
-    // Remove the Content-Type header
-  };
+    const object = {
+      method: "POST",
+      body: formData,
+    };
 
-  try {
-    const response = await fetch("http://localhost:8000/auth/register", object);
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
+    try {
+      const response = await fetch("http://localhost:8000/auth/register", object);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const fullData = await response.json();
+      console.log(fullData);
+      toast.success("Registration successful! Please log in.");
+      navigate("/login");
+    } catch (error) {
+      console.error("Error during registration:", error);
     }
-    const fullData = await response.json();
-    console.log(fullData);
-    navigate("/login");
-  } catch (error) {
-    console.error("Error during registration:", error);
   }
-}
-
 
   return (
     <div className="text-white flex flex-col items-center justify-center h-screen w-full bg-black p-3">
@@ -92,17 +74,6 @@ const SignUp = () => {
             onChange={(e) => handleOnChangeInput(e, "password")}
             className="w-[70%] h-11 text-white p-2 border-none rounded-md bg-[#222222] focus:outline-none"
           />
-
-          <div className="flex flex-col items-center w-full">
-            <input type="file" className="mb-2" onChange={uploadImage} />
-            <div className="w-24 h-24">
-              <img
-                src={uploadImageUrl}
-                alt="profilepic"
-                className="w-full h-full rounded-full"
-              />
-            </div>
-          </div>
 
           <div className="w-full flex items-center justify-center gap-4 mt-6">
             <div

@@ -4,14 +4,14 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
+import { toast } from "react-toastify";
 
-const VideoUpload = ({sideNavbar}) => {
+const VideoUpload = () => {
   const [inputField, setInputField] = useState({
     title: "",
     description: "",
     videoType: "",
     thumbnail: null,
-    video: null,
   });
   const [loader, setLoader] = useState(false);
   const [channelId, setChannelId] = useState(null);
@@ -54,8 +54,8 @@ const VideoUpload = ({sideNavbar}) => {
   };
 
   const handleUpload = async () => {
-    if (!inputField.title || !inputField.description || !inputField.videoType || !inputField.video || !inputField.thumbnail) {
-      alert("Please fill all fields and select files.");
+    if (!inputField.title || !inputField.description || !inputField.videoType || !inputField.thumbnail) {
+      toast.error("Please fill all the required fields.");
       return;
     }
     setLoader(true);
@@ -65,9 +65,7 @@ const VideoUpload = ({sideNavbar}) => {
       formData.append("title", inputField.title);
       formData.append("description", inputField.description);
       formData.append("videoType", inputField.videoType);
-      formData.append("video", inputField.video);
-      formData.append("image", inputField.thumbnail);
-      // Assuming channelId is stored in localStorage or can be fetched
+      formData.append("thumbnail", inputField.thumbnail);
       formData.append("channelId", channelId);
 
       const response = await axios.post("http://localhost:8000/videos/upload", formData, {
@@ -78,12 +76,13 @@ const VideoUpload = ({sideNavbar}) => {
       });
 
       if (response.status === 201) {
-        alert("Video uploaded successfully!");
-        navigate("/");
+        toast.success("Video uploaded successfully!");
+        // Navigate to the profile page of the channel to refresh videos
+        navigate(`/user/${channelId}`);
       }
     } catch (error) {
       console.error("Error uploading video:", error);
-      alert("Failed to upload video.");
+      toast.error("Failed to upload video.");
     } finally {
       setLoader(false);
     }
@@ -119,21 +118,12 @@ const VideoUpload = ({sideNavbar}) => {
             onChange={(e) => handleOnChangeInput(e, "videoType")}
             className="w-[90%] h-10 p-4 rounded-md text-white bg-[#222222] border-none text-base"
           />
-          <div className="w-[100%] text-center">
+          <div className="w-[100%] text-center cursor-pointer">
             <label className="text-white">Thumbnail</label>
             <input
               type="file"
               onChange={(e) => uploadFile(e, "thumbnail")}
               accept="image/*"
-              className="mt-2"
-            />
-          </div>
-          <div className="w-[90%] text-center">
-            <label className="text-white">Video</label>
-            <input
-              type="file"
-              onChange={(e) => uploadFile(e, "video")}
-              accept="video/mp4, video/webm, video/*"
               className="mt-2"
             />
           </div>

@@ -32,7 +32,6 @@ exports.uploadMedia = async (req, res) => {
     await Channel.findByIdAndUpdate(channelId, {
       $push: { videos: savedVideo._id },
     });
-
     res.status(201).json(savedVideo);
   } catch (err) {
     console.error("Error uploading media:", err);
@@ -120,6 +119,9 @@ exports.deleteVideo =  async (req, res) => {
   try {
     const deletedVideo = await Video.findByIdAndDelete(req.params.id);
     if (!deletedVideo) return res.status(404).send("Video not found");
+
+    // Remove the deleted channel ID from the user's channel array
+        await User.findByIdAndUpdate(deletedVideo.channelId, { $pull: { video: deletedVideo._id } });
 
     res.send("Video deleted");
   } catch (err) {
