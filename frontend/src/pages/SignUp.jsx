@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import logo from "../assestes/icon_logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify"; 
+import SideNavbar from "../Component/SideNavbar";
 
-const SignUp = () => {
+const SignUp = ({sideNavbar}) => {
   
   const [signUpField, setSignUpField] = useState({
     username: "",
@@ -46,6 +47,7 @@ const SignUp = () => {
 
   return (
     <div className="text-white flex flex-col items-center justify-center h-screen w-full bg-black p-3">
+      <SideNavbar sideNavbar={sideNavbar} />
       <div className="w-full h-auto max-w-md border mt-7 p-4 md:p-8 flex flex-col items-center justify-center shadow shadow-white">
         <div className="flex gap-3 w-full justify-center items-center text-2xl text-white font-medium mt-4 mb-4">
           <img src={logo} alt="logo" className="w-8" />

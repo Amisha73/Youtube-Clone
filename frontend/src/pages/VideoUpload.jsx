@@ -5,8 +5,9 @@ import axios from "axios";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import { toast } from "react-toastify";
+import SideNavbar from "../Component/SideNavbar";
 
-const VideoUpload = () => {
+const VideoUpload = ({sideNavbar}) => {
   const [inputField, setInputField] = useState({
     title: "",
     description: "",
@@ -89,8 +90,9 @@ const VideoUpload = () => {
   };
 
   return (
-    <div className="flex flex-col w-full h-screen items-center justify-center font-normal bg-black p-2 ">
-      <div className="w-full max-w-md rounded-md mt-5 p-5 shadow shadow-white border">
+    <div className="flex flex-col w-full min-h-screen items-center justify-center font-normal bg-black ">
+      <SideNavbar sideNavbar={sideNavbar} />
+      <div className="w-full max-w-md rounded-md mt-5 p-5 shadow shadow-white border mx-auto">
         <div className="flex gap-3 w-full justify-center items-center text-2xl text-white font-medium mb-4">
           <img src={logo} alt="logo" className="w-8" />
           Upload Video

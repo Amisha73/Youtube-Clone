@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import localVideos from "../data/localVideos";
-// import SideNavbar from "../Component/SideNavbar";
+import SideNavbar from "../Component/SideNavbar";
 
-/**
- * SearchResults Component ----- This component displays videos that match a search query from the URL.
- * It reads the search query from the URL, filters videos accordingly, and displays them.
- */
+// SearchResult component to display search results based on query parameters
+// It filters videos from local data based on the search query and displays them
 const SearchResult = ({sideNavbar}) => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -31,7 +29,7 @@ const SearchResult = ({sideNavbar}) => {
 
   return (
     <div className={`px-8 py-4 bg-black text-white min-h-screen `}>
-      {/* <SideNavbar sideNavbar={sideNavbar} /> */}
+      <SideNavbar sideNavbar={sideNavbar} />
 
       {results.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 py-14 ">

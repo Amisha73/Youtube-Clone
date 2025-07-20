@@ -44,6 +44,7 @@ const upload = multer({
 }).fields([
   { name: "channelBanner", maxCount: 1 },
   { name: "thumbnail", maxCount: 1 },
+  { name: "profilePicture", maxCount: 1 },
 ]);
 
 module.exports = upload;

@@ -28,7 +28,7 @@ const handleSearch = () => {
             placeholder="Search"
             value={searchQuery}
             onChange={handleInputChange}
-            className="w-full h-10 rounded-l-full bg-[#121212] text-white text-base pl-4 focus:outline-none"
+            className="w-full h-8 rounded-l-full bg-[#121212] text-white text-base pl-4 focus:outline-none"
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 handleSearch();
@@ -36,10 +36,10 @@ const handleSearch = () => {
             }}
           />
           <button
-            className="bg-gray-600 w-14 rounded-r-full flex justify-center items-center hover:bg-gray-700"
+            className="bg-gray-600 w-12 rounded-r-full flex justify-center items-center hover:bg-gray-700"
             onClick={handleSearch}
           >
-            <SearchIcon className="text-white" />
+            <SearchIcon className="text-white " />
           </button>
         </div>
       ) : (
@@ -68,10 +68,10 @@ const handleSearch = () => {
         </div>
       )}
       <button
-        className="sm:hidden bg-gray-600 rounded-full w-10 h-10 flex justify-center items-center hover:bg-gray-700"
+        className="sm:hidden bg-gray-600 rounded-full w-9 h-9 flex justify-center items-center hover:bg-gray-700"
         onClick={toggleSearchBar}
       >
-        <SearchIcon className="text-white" />
+        <SearchIcon className="text-white text-sm" />
       </button>
     </div>
   );

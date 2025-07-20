@@ -37,7 +37,7 @@ const Navbar = ({ setSideNavbarFunc, sideNavbar }) => {
       })
         .then(async (res) => {
           if (res.status === 401) {
-            alert("Token expired, please login again.");
+            toast.error("Token expired, please login again.");
             localStorage.removeItem("token");
             setIsLoggedIn(false);
             setUserProfilePic("https://www.gstatic.com/youtube/img/account/user_default_32.png");
@@ -125,7 +125,7 @@ const Navbar = ({ setSideNavbarFunc, sideNavbar }) => {
     <div>
       <div className="navbar h-14 w-full px-6 py-4 flex justify-between items-center top-0 fixed bg-black z-10">
         {/* Left side */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 md:gap-4">
          <MenuIcon
           className="text-white cursor-pointer md:hidden"
           onClick={sideNavbarFunc}
@@ -142,7 +142,7 @@ const Navbar = ({ setSideNavbarFunc, sideNavbar }) => {
         <SearchBar showSearchBar={showSearchBar} toggleSearchBar={toggleSearchBar} />
 
         {/* Right side */}
-        <div className="navbar-right flex gap-5 justify-center items-center relative">
+        <div className="navbar-right flex gap-2 sm:gap-5 justify-center items-center relative">
           {isLoggedIn ? (
             <>
               <Link

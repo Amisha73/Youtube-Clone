@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import logo from "../assestes/icon_logo.png";
 import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify"; // Import toast
+import { toast } from "react-toastify"; 
+import SideNavbar from "../Component/SideNavbar";
 
-const Login = () => {
+const Login = ({sideNavbar}) => {
   const [loginField, setLoginField] = useState({ email: "", password: "" });
   const [errorMessage, setErrorMessage] = useState(""); // State for error messages
   const navigate = useNavigate();
@@ -50,6 +51,7 @@ const Login = () => {
 
   return (
     <div className="w-full h-screen flex justify-center items-center bg-black text-white p-3 ">
+      <SideNavbar sideNavbar={sideNavbar} />
       <div className="w-full max-w-md bg-black p-6 md:p-8 rounded-lg border shadow flex flex-col items-center shadow-white">
         <div className="flex gap-3 w-full justify-center items-center text-2xl text-white font-medium mb-4">
           <img src={logo} alt="logo" className="w-8" />

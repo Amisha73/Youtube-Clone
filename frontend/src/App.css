@@ -1,17 +1,21 @@
 /* write your css here */
-.App{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+.App {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 .no-scrollbar {
   @apply [scrollbar-width:none] [&::-webkit-scrollbar]:hidden;
 }
-.imagewidth{
+.imagewidth {
   width: 20%;
 }
-.imgwidth{
+.imgwidth {
   width: 100%;
   height: 200px;
   border-radius: 100%;
+}
+.min-h-custom {
+  min-height: calc(100vh - 156px);
+  background-color: black;
 }

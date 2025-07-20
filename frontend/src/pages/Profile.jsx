@@ -61,29 +61,29 @@ const Profile = ({sideNavbar}) => {
   }, [id]);
 
   if (loading) {
-    return <div className="text-white flex justify-center items-center h-screen">Loading channel data...</div>;
+    return <div className="flex justify-center items-center bg-black text-white min-h-screen py-80  text-xl">Loading channel data...</div>
   }
 
   if (error) {
-    return <div className="text-red-500 flex justify-center items-center h-screen">Error: {error}</div>;
+    return <div className="text-red-500 text-center  bg-black min-h-screen py-80  text-xl">Error: {error}</div>
   }
 
   if (!channelData) {
-    return <div className="text-white flex justify-center items-center h-screen">No channel data found.</div>;
+    return <div className="text-white flex justify-center items-center min-h-screen">No channel data found.</div>
   }
 
   return (
-    <div className='flex flex-col md:flex-row w-full pt-5 pb-5 px-5 bg-black text-white min-h-screen'>
+    <div className='flex flex-col md:flex-row w-full h-full pb-5 px-5 sm:px-10 bg-black text-white min-h-screen'>
       <SideNavbar sideNavbar={sideNavbar} />
 
-      <div className={sideNavbar ? 'flex flex-col overflow-x-hidden flex-1 text-white mt-14 ml-64 justify-center items-center ' : 'flex flex-col overflow-x-hidden flex-1 text-white mt-14 justify-center items-center '}>
+      <div className='flex flex-col overflow-x-hidden flex-1 text-white mt-14 justify-center items-center '>
         <div className='w-full'>
-          <img src={channelData.channelBanner || ""} alt="channel banner" className='w-full h-36 mb-4 object-cover' />
+          <img src={channelData.channelBanner || ""} alt="channel banner" className='w-full h-36 mb-4 ' />
         </div>
         {/* user channel upper section */}
         <div className='w-full flex flex-col md:flex-row'>
           <div className='w-full md:w-[15%] flex justify-center md:justify-start mb-4 md:mb-0'>
-            <img src={channelData.profilePicture || ""} alt="profile" className={sideNavbar ? 'w-48 h-48 rounded-full object-cover' : 'w-48 h-48 rounded-full object-cover'} />
+            <img src={channelData.profilePicture || ""} alt="profile" className= 'w-48 h-48 rounded-full object-cover' />
           </div>
 
           <div className='flex flex-col gap-2 py-2 px-4 w-full md:w-[85%]'>

@@ -26,12 +26,12 @@ const App = () => {
         <Route path="/" element={<Home sideNavbar={sideNavbar} />} />
         <Route path="/watch/:id" element={<VideoUpdated sideNavbar={sideNavbar}/>} />
         <Route path="/user/:id" element={<Profile sideNavbar={sideNavbar} />} />
-        <Route path='/:id/upload' element = {<VideoUpload/>}/>
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/login" element={<Login />} />
+        <Route path='/:id/upload' element = {<VideoUpload sideNavbar={sideNavbar}/>}/>
+        <Route path="/signup" element={<SignUp sideNavbar={sideNavbar} />} />
+        <Route path="/login" element={<Login sideNavbar={sideNavbar} />} />
         <Route path="/user/mychannel" element={<MyChannels sideNavbar={sideNavbar} />} />
-        <Route path="/search" element={<SearchResult />} />
-        <Route path="*" element={<NotFound />} />
+        <Route path="/search" element={<SearchResult sideNavbar={sideNavbar}/>} />
+        <Route path="*" element={<NotFound sideNavbar={sideNavbar} />} />
       </Routes>
     </div>
   );
