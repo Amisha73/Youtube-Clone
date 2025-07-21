@@ -5,7 +5,12 @@ const Channel = require("../models/Channel");
 exports.uploadMedia = async (req, res) => {
   try {
     const { title, description, channelId, videoType } = req.body;
+   
     const { thumbnail } = req.files;
+     console.log("Files received:", req.files);
+    if (!req.files || !req.files.thumbnail || req.files.thumbnail.length === 0) {
+      return res.status(400).json({ message: "Thumbnail file is required" });
+    }
 
     // Upload channel banner to Cloudinary
     const thumbnailUploadResult = await cloudinary.uploader.upload(

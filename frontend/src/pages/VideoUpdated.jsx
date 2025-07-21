@@ -4,7 +4,6 @@ import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
-import tseries from '../assestes/tseries.png';
 import localVideos from '../data/localVideos';
 import SideNavbar from "../Component/SideNavbar";
 
@@ -142,7 +141,7 @@ const VideoUpdated = ({ sideNavbar }) => {
           <div className="flex justify-between mt-3 flex-wrap gap-4">
             <Link to={`/user/${video.uploader}`} className="flex gap-4 items-center flex-shrink-0">
               <img
-                src="https://i.pinimg.com/236x/03/eb/d6/03ebd625cc0b9d636256ecc44c0ea324.jpg"
+                src={video.pp}
                 alt="profile"
                 className="w-12 h-12 rounded-full"
               />
@@ -175,7 +174,7 @@ const VideoUpdated = ({ sideNavbar }) => {
         <div className="flex flex-col mt-8">
           <div className="text-xl font-medium">{comments.length} Comments</div>
           <div className="flex mt-6 gap-3">
-            <img src={tseries} alt="profilecomment" className="w-10 h-10 rounded-full" />
+            <img src={video.user?.profilePicture || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQC-yqd_apHIsV5Ws6LKPrNWGNUUq9mS10DSw&s"} alt="profilecomment" className="w-10 h-10 rounded-full" />
             {/* Input for comment */}
             <div className="flex flex-col w-full">
               <input
@@ -205,7 +204,7 @@ const VideoUpdated = ({ sideNavbar }) => {
           {comments.map(comment => (
             <div key={comment.commentId} className="flex flex-col gap-3 mb-6">
               <div className="flex gap-3">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQC-yqd_apHIsV5Ws6LKPrNWGNUUq9mS10DSw&s" alt="profilecomment" className="w-10 h-10 rounded-full" />
+                <img src={comment.userProfilePicture || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQC-yqd_apHIsV5Ws6LKPrNWGNUUq9mS10DSw&s"} alt="profilecomment" className="w-10 h-10 rounded-full" />
                 <div className="flex flex-col w-full">
                   <div className="flex justify-between items-center">
                     <div className="text-sm font-medium">{comment.userId}</div>

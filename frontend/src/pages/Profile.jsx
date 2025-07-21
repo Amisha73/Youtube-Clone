@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import SideNavbar from '../Component/SideNavbar'
 import ArrowRightIcon from '@mui/icons-material/ArrowRight'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 
 const Profile = ({sideNavbar}) => {
   const { id } = useParams();
@@ -9,11 +9,7 @@ const Profile = ({sideNavbar}) => {
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const navigate = useNavigate();
 
-  const handleVideoPlay = (videoId) => {
-         navigate(`/watch/${videoId}`);
-       };
 
   useEffect(() => {
     const fetchChannelData = async () => {
@@ -50,7 +46,7 @@ const Profile = ({sideNavbar}) => {
           throw new Error("Failed to fetch videos");
         }
         const data = await response.json();
-        setVideos(data.videos || []);
+        setVideos(data || []);
       } catch (err) {
         console.error("Error fetching videos:", err);
       }
@@ -82,7 +78,7 @@ const Profile = ({sideNavbar}) => {
         </div>
         {/* user channel upper section */}
         <div className='w-full flex flex-col md:flex-row'>
-          <div className='w-full md:w-[15%] flex justify-center md:justify-start mb-4 md:mb-0'>
+          <div className='w-full md:w-[15%] flex justify-center md:justify-start mb-4 md:mb-0 items-center'>
             <img src={channelData.profilePicture || ""} alt="profile" className= 'w-48 h-48 rounded-full object-cover' />
           </div>
 
@@ -100,12 +96,12 @@ const Profile = ({sideNavbar}) => {
         <div className='w-full mt-8'>
           <div className='text-xl text-gray-100 pb-2 font-medium flex items-center border-b border-[rgba(153,153,153)]'>Videos &nbsp; <ArrowRightIcon /></div>
 
-          <div className='flex gap-6 flex-wrap mt-5'>
+          <div className='flex gap-6 flex-wrap mt-5 '>
           {videos && videos.length > 0 ? (
             videos.map((video) => (
-              <Link key={video._id} to={`/watch/${video._id}`} className='w-52 cursor-pointer'>
+              <Link to={`/watch/${video._id}`} key={`${video._id}`} className='w-64 cursor-pointer '>
                 <div className='w-full relative'>
-                  <img src={video.thumbnail || ""} alt={video.title} className='w-full h-full object-cover'  onClick={() => handleVideoPlay(video._id)}/>
+                  <img src={video.thumbnail || ""} alt={video.title} className='w-full h-full object-cover' />
                 </div>
 
                 <div className='flex flex-col w-full'>

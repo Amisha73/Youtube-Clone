@@ -57,7 +57,7 @@ const HomePage = ({ sideNavbar }) => {
             <div className="flex pt-2">
               <div>
                 <img
-                  src="https://i.pinimg.com/originals/2a/2d/c2/2a2dc2d48cd11f4577b4813b76445702.jpg?nii=t"
+                  src={ video.pp || "https://via.placeholder.com/150"}
                   alt="profile"
                   className="w-12 h-10 rounded-full"
                 />
