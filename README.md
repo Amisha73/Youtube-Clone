@@ -40,15 +40,16 @@ frontend/
 
 ## Features
 
-- User authentication (signup, login)
-- Create and manage channels
-- Upload and update videos
-- Search videos
-- View video details and profiles
-- Responsive UI with React and Material UI
-- Video streaming and playback
-- commenting on video 
-- like and dislike the video
+- User authentication (signup, login) with token expiration handling that shows a toast notification to inform the user when their session expires.
+- Create and manage channels.
+- Upload and update videos, with upload functionality disabled if the user does not have a channel.
+- Search videos.
+- View video details and profiles.
+- Responsive UI with React and Material UI.
+- Video streaming and playback.
+- Commenting on videos.
+- Like and dislike videos.
+- View all user channels in the SideNavbar under the "My Channels" button if the user has channels.
 ---
 
 ## Prerequisites
