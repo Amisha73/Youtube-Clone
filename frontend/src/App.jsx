@@ -11,6 +11,7 @@ import MyChannels from "./pages/MyChannels";
 import VideoUpdated from "./pages/VideoUpdated";
 import SearchResult from "./pages/SearchResult";
 import NotFound from "./pages/Notfound";
+import VideoDetail from "./pages/VideoDetail";
 
 
 const App = () => {
@@ -24,9 +25,10 @@ const App = () => {
       <Navbar setSideNavbarFunc={setSideNavbarFunc} sideNavbar={sideNavbar} />
       <Routes>
         <Route path="/" element={<Home sideNavbar={sideNavbar} />} />
-        <Route path="/watch/:id" element={<VideoUpdated sideNavbar={sideNavbar}/>} />
+        <Route path="/localdata/video/watch/:id" element={<VideoUpdated sideNavbar={sideNavbar}/>} />
         <Route path="/user/:id" element={<Profile sideNavbar={sideNavbar} />} />
         <Route path='/:id/upload' element = {<VideoUpload sideNavbar={sideNavbar}/>}/>
+        <Route path="/watch/:id" element={<VideoDetail sideNavbar={sideNavbar} />} />
         <Route path="/signup" element={<SignUp sideNavbar={sideNavbar} />} />
         <Route path="/login" element={<Login sideNavbar={sideNavbar} />} />
         <Route path="/user/mychannel" element={<MyChannels sideNavbar={sideNavbar} />} />

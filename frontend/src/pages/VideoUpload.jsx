@@ -13,6 +13,7 @@ const VideoUpload = ({sideNavbar}) => {
     description: "",
     videoType: "",
     thumbnail: null,
+    videoUrl: null,
   });
   const [loader, setLoader] = useState(false);
   const [channelId, setChannelId] = useState(null);
@@ -55,7 +56,7 @@ const VideoUpload = ({sideNavbar}) => {
   };
 
   const handleUpload = async () => {
-    if (!inputField.title || !inputField.description || !inputField.videoType || !inputField.thumbnail) {
+    if (!inputField.title || !inputField.description || !inputField.videoType || !inputField.thumbnail || !inputField.videoUrl) {
       toast.error("Please fill all the required fields.");
       return;
     }
@@ -67,6 +68,7 @@ const VideoUpload = ({sideNavbar}) => {
       formData.append("description", inputField.description);
       formData.append("videoType", inputField.videoType);
       formData.append("thumbnail", inputField.thumbnail);
+      formData.append("videoUrl", inputField.videoUrl);
       formData.append("channelId", channelId);
 
       const response = await axios.post("http://localhost:8000/videos/upload", formData, {
@@ -127,6 +129,15 @@ const VideoUpload = ({sideNavbar}) => {
               onChange={(e) => uploadFile(e, "thumbnail")}
               accept="image/*"
               className="mt-2"
+            />
+          </div>
+          <div className="w-[100%] text-center cursor-pointer">
+            <label className="text-white">Video File</label>
+            <input
+              type="file"
+              onChange={(e) => uploadFile(e, "videoUrl")}
+              accept="video/*"
+              className="mt-2"  
             />
           </div>
 

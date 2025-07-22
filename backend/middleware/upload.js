@@ -9,7 +9,10 @@ const storage = multer.diskStorage({
     let dest = "";
     if (file.mimetype.startsWith("image/")) {
       dest = "./uploads/images";
-    } else {
+    } else if (file.mimetype.startsWith("video/")) {
+      dest = "./uploads/videos";
+    } 
+    else {
       return cb(new Error("Invalid file type"), false);
     }
     // Ensure directory exists
@@ -27,7 +30,7 @@ const storage = multer.diskStorage({
 // Initialize upload
 const upload = multer({
   storage: storage,
-  limits: { fileSize: 100 * 1024 * 1024 }, // Limit file size to 100MB
+  limits: { fileSize: 1000 * 1024 * 1024   }, // Limit file size to 1GB
   fileFilter: (req, file, cb) => {
     const filetypes = /jpeg|jpg|png|gif|mp4|mkv|avi|mov/; // Allowed formats
     const extname = filetypes.test(
@@ -45,6 +48,7 @@ const upload = multer({
   { name: "channelBanner", maxCount: 1 },
   { name: "thumbnail", maxCount: 1 },
   { name: "profilePicture", maxCount: 1 },
+  { name: "videoUrl", maxCount: 1 },
 ]);
 
 module.exports = upload;

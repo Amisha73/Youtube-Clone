@@ -41,6 +41,7 @@ const Navbar = ({ setSideNavbarFunc, sideNavbar }) => {
             localStorage.removeItem("token");
             setIsLoggedIn(false);
             setUserProfilePic("https://www.gstatic.com/youtube/img/account/user_default_32.png");
+            navigate("/");
             return;
           }
           return res.json();

@@ -1,12 +1,13 @@
 const cloudinary = require("cloudinary").v2;
 const Video = require("../models/Video");
 const Channel = require("../models/Channel");
+const User = require("../models/User");
 
 exports.uploadMedia = async (req, res) => {
   try {
     const { title, description, channelId, videoType } = req.body;
    
-    const { thumbnail } = req.files;
+    const { thumbnail, videoUrl } = req.files;
      console.log("Files received:", req.files);
     if (!req.files || !req.files.thumbnail || req.files.thumbnail.length === 0) {
       return res.status(400).json({ message: "Thumbnail file is required" });
@@ -19,6 +20,13 @@ exports.uploadMedia = async (req, res) => {
         resource_type: "image",
       }
     );
+     // Upload channel banner to Cloudinary
+    const VideoUrlUploadResult = await cloudinary.uploader.upload(
+      videoUrl[0].path,
+      {
+        resource_type: "video",
+      }
+    );
     
     // Create a new video document
     const newVideo = new Video({
@@ -27,6 +35,7 @@ exports.uploadMedia = async (req, res) => {
       description,
       videoType,
       channelId,
+      videoUrl: VideoUrlUploadResult.secure_url,
       user: req.user.id,
     });
 
@@ -73,6 +82,18 @@ exports.getVideoByChannel = async (req, res) => {
   }
 };
 
+exports.getAllVideos = async (req, res) => {
+  try {   
+    const videos = await Video.find()
+      .populate("user", "username profilePicture")
+      .populate("channelId", "channelName profilePicture") 
+      .sort({ createdAt: -1 }); 
+    res.json(videos);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+};
+
 // Add Comment
 exports.addComment = async (req, res) => {
   const { text } = req.body;
@@ -94,7 +115,7 @@ exports.getComment = async (req, res) => {
     const video = await Video.findById(req.params.id).populate(
       "comments.userId",
       "username profilePicture"
-    );
+    ).populate("channelId", "channelName profilePicture") ;
     if (!video) return res.status(404).send("Video not found");
 
     res.json(video.comments);

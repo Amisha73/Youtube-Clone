@@ -1,11 +1,12 @@
 const express = require('express');
-const { uploadMedia, getvideo, getVideoByChannel, likeVideo, dislikeVideo, addComment, getComment, updateVideo, deleteVideo } = require('../controllers/videoController');
+const { uploadMedia, getvideo, getVideoByChannel, likeVideo, dislikeVideo, addComment, getComment, updateVideo, deleteVideo, getAllVideos } = require('../controllers/videoController');
 const { authenticate } = require('../middleware/authMiddleware');
 const upload = require('../middleware/upload');
 const router = express.Router();
 
 router.post("/upload", authenticate, upload ,uploadMedia);
 router.get("/getvideo/:id", authenticate, getvideo);
+router.get("/getvideos", authenticate, getAllVideos);
 router.get("/channel/:channelId", authenticate, getVideoByChannel);
 router.post("/:id/like", authenticate, likeVideo);
 router.post("/:id/dislike", authenticate, dislikeVideo);
