@@ -99,7 +99,7 @@ const Profile = ({sideNavbar}) => {
           <div className='flex gap-6 flex-wrap mt-5 '>
           {videos && videos.length > 0 ? (
             videos.map((video) => (
-              <Link to={`/watch/${video._id}`} key={`${video._id}`} className='w-64 cursor-pointer '>
+              <Link to={`/watch/video06`} key={`${video._id}`} className='w-64 cursor-pointer '>
                 <div className='w-full relative'>
                   <img src={video.thumbnail || ""} alt={video.title} className='w-full h-full object-cover' />
                 </div>
