@@ -61,7 +61,7 @@ const HomePage = ({ sideNavbar }) => {
 
   if (loading) {
     return (
-      <div class="loader flex justify-center items-center mx-auto h-screen"></div>
+      <div className="loader flex justify-center items-center mx-auto h-screen"></div>
     );
   }
 
