@@ -11,6 +11,7 @@ const SignUp = ({sideNavbar}) => {
     email: "",
     password: "",
   });
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
   const handleOnChangeInput = (event, name) => {
@@ -42,6 +43,7 @@ const SignUp = ({sideNavbar}) => {
       navigate("/login");
     } catch (error) {
       console.error("Error during registration:", error);
+      setErrorMessage("Registration failed. Please try again.");
     }
   }
 
@@ -53,6 +55,12 @@ const SignUp = ({sideNavbar}) => {
           <img src={logo} alt="logo" className="w-8" />
           Sign Up
         </div>
+
+        {errorMessage && ( 
+          <div className="text-red-500 text-center mt-4">
+            {errorMessage}
+          </div>
+        )}
 
         <div className="flex justify-center items-center flex-col mt-4 gap-5 w-full">
           <input

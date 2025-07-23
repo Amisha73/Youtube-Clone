@@ -5,6 +5,7 @@ import localVideos from "../data/localVideos";
 const HomePage = ({ sideNavbar }) => {
   const [selectedOption, setSelectedOption] = useState("All");
   const [allVideos, setAllVideos] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   // Get unique video types from localVideos
   const videoTypes = Array.from(
@@ -49,6 +50,20 @@ const HomePage = ({ sideNavbar }) => {
     selectedOption === "All"
       ? allVideos
       : allVideos.filter((video) => video.videoType === selectedOption);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 1000); // 1 seconds loading
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loading) {
+    return (
+      <div class="loader flex justify-center items-center mx-auto h-screen"></div>
+    );
+  }
 
   return (
     <div
@@ -140,7 +155,7 @@ const HomePage = ({ sideNavbar }) => {
               <div>
                 <img
                   src={
-                   video.channelId?.profilePicture ||
+                    video.channelId?.profilePicture ||
                     "https://via.placeholder.com/150"
                   }
                   alt="profile"
