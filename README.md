@@ -120,6 +120,10 @@ The frontend will run on `http://localhost:3000` by default and is configured to
 
 ---
 
+
+## GitHub link : 
+   `https://github.com/Amisha73/Youtube-Clone`
+
 ## Usage
 
 - Open your browser and go to `http://localhost:3000`
